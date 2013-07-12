@@ -1,0 +1,82 @@
+/*   
+Author: Dism
+Author URI: http://www.dism.com.au
+Version: 1.0
+*/
+
+.fit {
+	margin-left:0!important;
+	margin-right:0!important;
+}
+
+h3.options-heading {
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	padding: 0 0 0 10px;
+	margin: 20px 0 0 0;
+	border:1px solid #dfdfdf;
+	background-color: #F1F1F1;
+	background-image: -ms-linear-gradient(top, #F9F9F9, #ECECEC);
+	background-image: -moz-linear-gradient(top, #F9F9F9, #ECECEC);
+	background-image: -o-linear-gradient(top, #F9F9F9, #ECECEC);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#ECECEC));
+	background-image: -webkit-linear-gradient(top, #F9F9F9, #ECECEC);
+	background-image: linear-gradient(top, #F9F9F9, #ECECEC);
+	height: 34px;
+	line-height: 34px;
+	width: 980px;
+	font-size: 15px;
+	font-weight: normal;
+	float: left;
+	color: #464646;
+	font-family:Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
+	text-decoration: none;
+	display: block;
+	text-shadow:#fff 0 1px 0;
+}
+
+.container {
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #dfdfdf;
+	border-top:none;
+	background: #fcfcfc;
+	overflow: hidden;
+	font-size: 12px;
+	clear: both;
+	color:#333;
+	width:990px;
+}
+
+.container .block {
+	padding: 20px;
+}
+
+div.updated {
+}
+
+.inline-css {
+	color:#1e1eff;
+	font-family:Consolas, "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+}
+
+.description {
+	font-size:11px;
+	color: #666666;
+}
+
+.help-links {
+	display:block;
+	font-size:11px;
+	color: #666666;
+}
