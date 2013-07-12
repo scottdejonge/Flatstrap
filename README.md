@@ -3,7 +3,7 @@ Flatstrap
 
 Version 1.0
 
-A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.github.io/bootstrap/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and Custom Wordpress Functions and Flat Elements.
+Demo: http://flatstrap.scottdejonge.com
 
 ## Contributors
 
@@ -11,7 +11,7 @@ Scott de Jonge [@scottdejonge](https://twitter.com/scottdejonge)
 
 ## Summary
 
-A Wordpress Theme using [Bootstrap](http://twitter.github.io/bootstrap/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and Custom Wordpress Functions and Flat Elements.
+A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.github.io/bootstrap/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and Custom Wordpress Functions and Flat Elements.
 
 ## Features
 
