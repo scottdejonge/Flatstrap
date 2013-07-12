@@ -13,20 +13,22 @@ Scott de Jonge [@scottdejonge](https://twitter.com/scottdejonge)
 
 A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.github.io/bootstrap/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and Custom Wordpress Functions and Flat Elements.
 
-## Features
+## Usage
+
+### Features
 
 1. Slides Post Type
 2. Projects Post Type
 3. Theme Options
 4. Page Templates
 
-## Theme Options
+### Theme Options
 
 * Google Analytics
 * Contact Information
 * Social Media Links
 
-## Page Templates
+### Page Templates
 
 * Blog
 * Home
@@ -38,13 +40,13 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 * Contact
 * Gallery
 
-##Changelog
+### Changelog
 
-### Version 1.0
+#### Version 1.0
 
 * initial version
 
-## Credits
+### Credits
 
 * [Wordpress](http://wordpress.org/)
 * [Bootstrap](http://twitter.github.io/bootstrap/)
