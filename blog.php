@@ -28,10 +28,23 @@ Template Name: Blog
 				<div class="entry">
 					<h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 					<ul class="post-meta">
-							<li class="meta"><i class="icon-user"></i> by <?php the_author_posts_link(); ?></li>
-							<li class="meta"><i class="icon-calendar"></i> <time datetime="<?php echo date(DATE_W3C); ?>" pubdate class="updated"><?php the_time('j F Y') ?></time></li>
-							<li class="meta"><i class="icon-comment"></i> <?php comments_popup_link(__('0 comments','example'),__('1 comment','example'),__('% comments','example')); ?></li>
-							<li class="meta"><i class="icon-tags"></i> <?php the_tags( '<span class="label label-info">', '</span><span class="label label-info">', '</span>' ); ?> </li>
+							<li class="meta">
+								<i class="icon-user"></i> by <?php the_author_posts_link(); ?>
+							</li>
+							<li class="meta">
+								<i class="icon-calendar"></i> <time datetime="<?php echo date(DATE_W3C); ?>" pubdate class="updated"><?php the_time('j F Y') ?></time>
+							</li>
+							<li class="meta">
+								<i class="icon-comment"></i> <?php comments_popup_link(__('0 comments','example'),__('1 comment','example'),__('% comments','example')); ?>
+							</li>
+							<li class="meta">
+								<i class="icon-tag"></i> <?php the_category(' '); ?>
+							</li>
+							<?php if(has_tag()) { ?>
+							<li class="meta">
+								<i class="icon-tags"></i> <?php the_tags( '<span class="label label-info">', '</span><span class="label label-info">', '</span>' ); ?>
+							</li>
+							<?php } ?>
 					</ul>
 					<?php the_excerpt(); ?>
 					<!--
@@ -53,17 +66,13 @@ Template Name: Blog
 				</div>
 			</article>
 			
-		<?php endwhile; ?>
+		<?php endwhile; endif; ?>
 	 </div>
 	 
 	 
 	<aside class="span4">
 		<?php get_sidebar(); ?>
-	</aside>
-	
-	<?php else : ?>
-		<h2>No News Could Be Found</h2>
-	<?php endif; ?>		
+	</aside>	
 </div>
 
 <div class="row">

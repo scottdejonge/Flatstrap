@@ -40,14 +40,6 @@
 
 <body>	
 
-<!--[if lt IE 7]>
-	<div class="alert alert-browser container">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<span class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</span>
-	</div>
-<![endif]-->
-
-
 <nav class="navbar navbar-static-top">
 	<div class="navbar-inverse">
 		<div class="container">
@@ -58,11 +50,18 @@
 			</a>
 			<a class="brand" href="<?php bloginfo('url'); ?>" title="<?php echo get_bloginfo('name'); ?>" alt="<?php echo get_bloginfo('name'); ?>"><?php echo get_bloginfo('name'); ?></a>
 			<div class="nav-collapse collapse">
-				<?php wp_nav_menu(array('main-menu' => 'Main Menu', 'depth' => 0,'container_class' => '', 'menu_class' => 'nav', 'menu_id' => 'menu', 'walker' => new Bootstrap_Walker_Nav_Menu())); ?>
+				<?php wp_nav_menu(array('main-menu' => 'Main Menu', 'depth' => 0,'container_class' => '', 'menu_class' => 'nav', 'menu_id' => 'menu', 'walker' => new wp_bootstrap_navwalker())); ?>
 				<?php social_links(); ?>
 			</div>
 		</div>
 	</div>
 </nav>
+
+<!--[if lt IE 7]>
+	<div class="alert container" style="margin-top: 20px;">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<span class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</span>
+	</div>
+<![endif]-->
 
 <div id="content" class="container">

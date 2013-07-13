@@ -51,5 +51,6 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 * [Wordpress](http://wordpress.org/)
 * [Bootstrap](http://twitter.github.io/bootstrap/)
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+* [WP Bootstrap Nav Walker](https://github.com/twittem/wp-bootstrap-navwalker)
 * [Normalize.css](http://necolas.github.io/normalize.css/)
 * [Modernizr.js](hhttp://modernizr.com/)

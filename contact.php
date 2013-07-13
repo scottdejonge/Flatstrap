@@ -3,64 +3,84 @@
 Template Name: Contact
 */
 ?>
+<?php 
+//If the form is submitted
+if(isset($_POST['submitted'])) {
 
-<?php
-
-	$response = "";
-	
-	//Generate Response
-	function generate_response($type, $message) {
-	
-		global $response;
-		
-		if($type == "success") {
-			$response = '<div class="alert alert-success">'.$message.'</div>';
-		} else {
-			$response = '<div class="alert alert-error">'.$message.'</div>';
-		}
-	}
-
-	//Response Messages
-	$missing_content = "Please supply all information.";
-	$email_invalid   = "Email Address Invalid.";
-	$message_unsent  = "Message was not sent. Try Again.";
-	$message_sent    = "Thanks! Your message has been sent.";
-	
-	//Form Variables
-	$name = $_POST['name'];
-	$email = $_POST['email'];
-	$subject = $_POST['subject'];
-	$message = $_POST['message'];
-	
-	//Mailer Variables
-	$to = get_option('admin_email');
-	//$subject = "Someone sent a message from ".get_bloginfo('name');
-	$headers = 'From: '.$email."\r\n". 'Reply-To: '.$email."\r\n";
-
-	//Validate email
-	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		generate_response("error", $email_invalid);
+	//Check to see if the honeypot captcha field was filled in
+	if(trim($_POST['checking']) !== '') {
+		$captchaError = true;
 	} else {
-		if(empty($name) || empty($subject) || empty($message)) {
-			generate_response("error", $missing_content);
+	
+		//Check to make sure that the name field is not empty
+		if(trim($_POST['contactName']) === '') {
+			$nameError = 'You forgot to enter your name.';
+			$hasError = true;
 		} else {
-			$sent = wp_mail($to, $subject, strip_tags($message), $headers);
+			$name = trim($_POST['contactName']);
 		}
-		if($sent) {
-			generate_response("success", $message_sent); //message sent!
+		
+		//Check to make sure sure that a valid email address is submitted
+		if(trim($_POST['email']) === '')  {
+			$emailError = 'You forgot to enter your email address.';
+			$hasError = true;
+		} else if (!eregi("^[A-Z0-9._%-]+@[A-Z0-9._%-]+\.[A-Z]{2,4}$", trim($_POST['email']))) {
+			$emailError = 'You entered an invalid email address.';
+			$hasError = true;
 		} else {
-			generate_response("error", $message_unsent); //message wasn't sent
-		} 
-	} if ($_POST['submitted']) {
-		generate_response("error", $missing_content);
-	}
+			$email = trim($_POST['email']);
+		}
+			
+		//Check to make sure comments were entered	
+		if(trim($_POST['comments']) === '') {
+			$commentError = 'You forgot to enter your comments.';
+			$hasError = true;
+		} else {
+			if(function_exists('stripslashes')) {
+				$comments = stripslashes(trim($_POST['comments']));
+			} else {
+				$comments = trim($_POST['comments']);
+			}
+		}
+		
+		$options = get_option('dism_theme_options');
+			
+		//If there is no error, send the email
+		if(!isset($hasError)) {
 
-?>
+			$emailTo = $options['email_address'];
+			$subject = 'Contact Form Submission from '.$name;
+			$sendCopy = trim($_POST['sendCopy']);
+			$body = "Name: $name \n\nEmail: $email \n\nComments: $comments";
+			$headers = 'From: My Site <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
+			
+			mail($emailTo, $subject, $body, $headers);
+
+			if($sendCopy == true) {
+				$subject = 'You emailed Your Name';
+				$headers = 'From: Your Name <noreply@somedomain.com>';
+				mail($email, $subject, $body, $headers);
+			}
+
+			$emailSent = true;
+
+		}
+	}
+} ?>
+
 
 <?php get_header(); ?>
 
-	
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php if(isset($emailSent) && $emailSent == true) { ?>
+
+	<div class="thanks">
+		<h1>Thanks, <?=$name;?></h1>
+		<p>Your email was successfully sent. I will be in touch soon.</p>
+	</div>
+
+<?php } else { ?>
+
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<div class="row">
 		<h1 class="span12 page-title"><?php the_title(); ?></h1>
 	</div>
@@ -68,25 +88,83 @@ Template Name: Contact
 		<article class="post span8" id="post-<?php the_ID(); ?>">
 			<div class="entry">
 				<?php the_content(); ?>
-				<div id="respond">
-					<?php echo $response; ?>
-					<form class="span8" action="<?php the_permalink(); ?>" method="post">
-						<div class="row">
-							<label for="name">Name <span class="required">*</span></label>
-							<input type="text" id="name" name="name" value="<?php echo esc_attr($_POST['name']); ?>" class="span5" placeholder="Your Name" />
-							<label for="email">Email Address <span class="required">*</span></label>
-							<input type="text" id="email" name="email" value="<?php echo esc_attr($_POST['email']); ?>" class="span5" placeholder="Your email address" />
-							<label for="subject">Subject <span class="required">*</span></label>
-							<input type="text" id="subject" name="subject" value="<?php echo esc_attr($_POST['subject']); ?>" class="span5" placeholder="Subject" />
-							<label for="message">Message <span class="required">*</span></label>
-							<textarea id="message" name="message" class="input-xlarge span8" rows="10">
-								<?php echo esc_textarea($_POST['message']); ?>
-							</textarea>
-							<input type="hidden" name="submitted" value="1">
-							<input type="submit" value="Send" class="btn btn-primary" />
-						</div>
-					</form>
-				</div>
+				
+				<?php if(isset($hasError) || isset($captchaError)) { ?>
+					<p class="error">There was an error submitting the form.<p>
+				<?php } ?>
+				
+				<form class="span8" action="<?php the_permalink(); ?>" method="post">
+					<div class="row">
+						<label for="contactName">Name <span class="required">*</span></label>
+						<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="span5 requiredField" placeholder="Your Name" />
+						<?php if($nameError != '') { ?>
+							<span class="error"><?=$nameError;?></span> 
+						<?php } ?>
+						<label for="email">Email Address <span class="required">*</span></label>
+						<input type="text" id="email" name="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="span5 requiredField email" placeholder="Your email address" />
+						<?php if($emailError != '') { ?>
+							<span class="error"><?=$emailError;?></span>
+						<?php } ?>
+						<label for="subject">Subject <span class="required">*</span></label>
+						<input type="text" id="subject" name="subject" value="<?php echo esc_attr($_POST['subject']); ?>" class="span5" placeholder="Subject" />
+						<label for="message">Message <span class="required">*</span></label>
+						<textarea id="message" name="message" class="input-xlarge span8" rows="10">
+							<?php echo esc_textarea($_POST['message']); ?>
+						</textarea>
+						<input type="hidden" name="submitted" value="1">
+						<input type="submit" value="Send" class="btn btn-primary" />
+					</div>
+				</form>
+				
+				<!--
+<form action="<?php the_permalink(); ?>" id="contactForm" method="post">
+	
+					<ol class="forms">
+						<li><label for="contactName">Name</label>
+							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="requiredField" />
+							<?php if($nameError != '') { ?>
+								<span class="error"><?=$nameError;?></span> 
+							<?php } ?>
+						</li>
+						
+						<li><label for="email">Email</label>
+							<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="requiredField email" />
+							<?php if($emailError != '') { ?>
+								<span class="error"><?=$emailError;?></span>
+							<?php } ?>
+						</li>
+						
+						<li class="textarea"><label for="commentsText">Comments</label>
+							<textarea name="comments" id="commentsText" rows="20" cols="30" class="requiredField"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
+							<?php if($commentError != '') { ?>
+								<span class="error"><?=$commentError;?></span> 
+							<?php } ?>
+						</li>
+						<li class="inline"><input type="checkbox" name="sendCopy" id="sendCopy" value="true"<?php if(isset($_POST['sendCopy']) && $_POST['sendCopy'] == true) echo ' checked="checked"'; ?> /><label for="sendCopy">Send a copy of this email to yourself</label></li>
+						<li class="screenReader"><label for="checking" class="screenReader">If you want to submit this form, do not enter anything in this field</label><input type="text" name="checking" id="checking" class="screenReader" value="<?php if(isset($_POST['checking']))  echo $_POST['checking'];?>" /></li>
+						<li class="buttons"><input type="hidden" name="submitted" id="submitted" value="true" /><button type="submit">Email me &raquo;</button></li>
+					</ol>
+				</form>
+-->
+				
+				<!--
+<form class="span8" action="<?php the_permalink(); ?>" method="post">
+					<div class="row">
+						<label for="name">Name <span class="required">*</span></label>
+						<input type="text" id="name" name="name" value="<?php echo esc_attr($_POST['name']); ?>" class="span5" placeholder="Your Name" />
+						<label for="email">Email Address <span class="required">*</span></label>
+						<input type="text" id="email" name="email" value="<?php echo esc_attr($_POST['email']); ?>" class="span5" placeholder="Your email address" />
+						<label for="subject">Subject <span class="required">*</span></label>
+						<input type="text" id="subject" name="subject" value="<?php echo esc_attr($_POST['subject']); ?>" class="span5" placeholder="Subject" />
+						<label for="message">Message <span class="required">*</span></label>
+						<textarea id="message" name="message" class="input-xlarge span8" rows="10">
+							<?php echo esc_textarea($_POST['message']); ?>
+						</textarea>
+						<input type="hidden" name="submitted" value="1">
+						<input type="submit" value="Send" class="btn btn-primary" />
+					</div>
+				</form>
+-->
 			</div>
 		</article>
 		
@@ -110,17 +188,8 @@ Template Name: Contact
 			</div>
 		</aside>
 	</div>				
-	<?php endwhile; else: ?>
-		<div class="row">
-			<article class="post span12">
-				<div class="entry">
-					<h1 class="post-title"><?php _e('Page Not Found',''); ?></h1>
-					<p>The page you are looking for cannot be found.</p>
-					<p>Head back to the <a href="<?php bloginfo('url'); ?>">Homepage</a></p>
-					<?php get_search_form(); ?>
-				</div>
-			</article>
-		</div>
-	<?php endif; ?>
+	<?php endwhile; endif; ?>
+
+<?php } ?>
 
 <?php get_footer(); ?>

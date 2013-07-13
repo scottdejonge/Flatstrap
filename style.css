@@ -1,6 +1,6 @@
 /*   
 Theme Name: Flatstrap
-Theme URI: http://flatstrap/
+Theme URI: http://flatstrap.scottdejonge.com
 Description: A Wordpress theme using Bootstrap.
 Author: Scott de Jonge
 Author URI: http://www.scottdejonge.com
@@ -260,8 +260,7 @@ ul li, ol li {
 /* Caret */
 
 .navbar #menu.nav > li.dropdown a.dropdown-toggle {
-	padding: 0px 10px;
-	line-height: 60px;
+	
 }
 
 .dropdown-menu {
@@ -272,19 +271,20 @@ ul li, ol li {
 	display: none;
 	padding: 5px 0;
 	margin: 0;
+	background: #607E9F;
 }
 
 .dropdown-menu li > a {
 	padding: 5px;
 	font-weight: 300;
 	font-size: 0.8em;
+	color: #B5D1E7;
 }
 
 .dropdown-menu li > a:hover,
 .dropdown-menu li > a:focus,
 .dropdown-submenu:hover > a {
-	color: red;
-	background: #607E9F !important;
+	background: #4A6D92 !important;
 }
 
 /* Nav-Bar Button */
