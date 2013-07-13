@@ -27,6 +27,7 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 
 ### Theme Options
 
+* Breadcrumbs
 * Google Analytics
 * Contact Information
 * Social Media Links
