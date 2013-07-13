@@ -17,10 +17,13 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 
 ### Features
 
-1. Slides Post Type
-2. Projects Post Type
-3. Theme Options
-4. Page Templates
+1. Carousel
+2. Slides Post Type
+3. Projects Carousel
+4. Projects Post Type
+5. Theme Options
+6. Breadcrumbs
+7. Blog
 
 ### Theme Options
 
