@@ -139,6 +139,13 @@ input[type="search"] {
 	box-shadow: none;
 }
 
+@media (max-width: 767px) {
+	.navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+}
+
 .navbar .nav>.active>a,
 .navbar .nav>.active>a:hover,
 .navbar .nav>.active>a:focus,
