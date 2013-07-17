@@ -357,18 +357,18 @@ function the_pagination($pages = '', $range = 2) {
 //Breadcrumb List
 function breadcrumb_lists() {
   
-  $chevron = '/';
+  $chevron = '<span class="divider">/</span>';
   $home = __('Home','responsive'); 
-  $before = '<span class="breadcrumb-current">';
-  $after = '</span>';
+  $before = '<li class="active">';
+  $after = '</li>';
  
   if ( !is_home() && !is_front_page() || is_paged() ) {
  
-    echo '<div class="breadcrumb-list">';
+    echo '<ul class="breadcrumb">';
  
     global $post;
     $homeLink = home_url();
-    echo '<a href="' . $homeLink . '">' . $home . '</a> ' . $chevron . ' ';
+    echo '<li><a href="' . $homeLink . '">' . $home . '</a></li> ' . $chevron . ' ';
  
     if ( is_category() ) {
       global $wp_query;
@@ -380,12 +380,12 @@ function breadcrumb_lists() {
       echo $before . __('Archive for ','responsive') . single_cat_title('', false) . $after;
  
     } elseif ( is_day() ) {
-      echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $chevron . ' ';
-      echo '<a href="' . get_month_link(get_the_time('Y'),get_the_time('m')) . '">' . get_the_time('F') . '</a> ' . $chevron . ' ';
+      echo '<li><a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a></li> ' . $chevron . ' ';
+      echo '<li><a href="' . get_month_link(get_the_time('Y'),get_the_time('m')) . '">' . get_the_time('F') . '</a> ' . $chevron . ' ';
       echo $before . get_the_time('d') . $after;
  
     } elseif ( is_month() ) {
-      echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $chevron . ' ';
+      echo '<li><a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a></li> ' . $chevron . ' ';
       echo $before . get_the_time('F') . $after;
  
     } elseif ( is_year() ) {
@@ -395,7 +395,7 @@ function breadcrumb_lists() {
       if ( get_post_type() != 'post' ) {
         $post_type = get_post_type_object(get_post_type());
         $slug = $post_type->rewrite;
-        echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $post_type->labels->singular_name . '</a> ' . $chevron . ' ';
+        echo '<li><a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $post_type->labels->singular_name . '</a></li> ' . $chevron . ' ';
         echo $before . get_the_title() . $after;
       } else {
         $cat = get_the_category(); $cat = $cat[0];
@@ -411,7 +411,7 @@ function breadcrumb_lists() {
       $parent = get_post($post->post_parent);
       $cat = get_the_category($parent->ID); $cat = $cat[0];
       echo get_category_parents($cat, TRUE, ' ' . $chevron . ' ');
-      echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a> ' . $chevron . ' ';
+      echo '<li><a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a></li> ' . $chevron . ' ';
       echo $before . get_the_title() . $after;
  
     } elseif ( is_page() && !$post->post_parent ) {
@@ -422,7 +422,7 @@ function breadcrumb_lists() {
       $breadcrumbs = array();
       while ($parent_id) {
         $page = get_page($parent_id);
-        $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
+        $breadcrumbs[] = '<li><a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a></li>';
         $parent_id  = $page->post_parent;
       }
       $breadcrumbs = array_reverse($breadcrumbs);
@@ -450,13 +450,16 @@ function breadcrumb_lists() {
       if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ')';
     }
  
-    echo '</div>';
+    echo '</ul>';
  
   }
 } 
 
 function get_breadcrumbs() { 
-	// Breadcrumbs
+	$options = get_option('flatstrap_theme_options');
+	if ($options['breadcrumb'] == 0) {
+		echo breadcrumb_lists();
+    }
 }
 
 
@@ -549,6 +552,7 @@ function slides_meta_box_save( $post_id ) {
 
 
 //Create Projects Custom Post Type
+/*
 add_action('init', 'create_projects_post_type');
 function create_projects_post_type() {
 	$labels = array(
@@ -579,6 +583,7 @@ function create_projects_post_type() {
 	  ); 
 	register_post_type( 'projects' , $args );
 }
+*/
 
 
 
@@ -648,23 +653,23 @@ function mytheme_comment($comment, $args, $depth) {
 
 
 
-add_action('admin_init', 'dism_theme_options_init');
-add_action('admin_menu', 'dism_theme_options_add_page');
+add_action('admin_init', 'flatstrap_theme_options_init');
+add_action('admin_menu', 'flatstrap_theme_options_add_page');
 
 // A safe way of adding javascripts to a WordPress generated page.
-function dism_admin_enqueue_scripts( $hook_suffix ) {
-	wp_enqueue_style( 'dism-theme-options', get_template_directory_uri() . '/css/theme-options.css', false, '1.0' );
+function flatstrap_admin_enqueue_scripts( $hook_suffix ) {
+	wp_enqueue_style( 'flatstrap-theme-options', get_template_directory_uri() . '/css/theme-options.css', false, '1.0' );
 }
-add_action( 'admin_print_styles-appearance_page_theme_options', 'dism_admin_enqueue_scripts' );
+add_action( 'admin_print_styles-appearance_page_theme_options', 'flatstrap_admin_enqueue_scripts' );
 
 // Init plugin options to white list our options
-function dism_theme_options_init() {
-    register_setting('dism_options', 'dism_theme_options', 'dism_theme_options_validate');
+function flatstrap_theme_options_init() {
+    register_setting('flatstrap_options', 'flatstrap_theme_options', 'flatstrap_theme_options_validate');
 }
 
 // Load up the menu page
-function dism_theme_options_add_page() {
-    add_theme_page(__('Theme Options', 'dism'), __('Theme Options', 'dism'), 'edit_theme_options', 'theme_options', 'dism_theme_options_do_page');
+function flatstrap_theme_options_add_page() {
+    add_theme_page(__('Theme Options', 'flatstrap'), __('Theme Options', 'flatstrap'), 'edit_theme_options', 'theme_options', 'flatstrap_theme_options_do_page');
 }
 
 // Redirect users to Theme Options after activation
@@ -677,116 +682,116 @@ if ( is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" )
  * And if left blank let's not display anything at all in case there is a plugin that does this
  */
  
-function dism_google_verification() {
-    $options = get_option('dism_theme_options');
+function flatstrap_google_verification() {
+    $options = get_option('flatstrap_theme_options');
     if ($options['google_site_verification']) {
 		echo '<meta name="google-site-verification" content="' . $options['google_site_verification'] . '" />' . "\n";
 	}
 }
 
-add_action('wp_head', 'dism_google_verification');
+add_action('wp_head', 'flatstrap_google_verification');
 
-function dism_site_statistics_tracker() {
-    $options = get_option('dism_theme_options');
+function flatstrap_site_statistics_tracker() {
+    $options = get_option('flatstrap_theme_options');
     if ($options['site_statistics_tracker']) {
         echo $options['site_statistics_tracker'];
 	}
 }
 
-add_action('wp_head', 'dism_site_statistics_tracker');
+add_action('wp_head', 'flatstrap_site_statistics_tracker');
 
-function dism_contact_information_validation() {
-    $options = get_option('dism_theme_options');
+function flatstrap_contact_information_validation() {
+    $options = get_option('flatstrap_theme_options');
     if ($options['contact_information']) {
         echo $options['contact_information'];
 	}
 }
 
-add_action('wp_head', 'dism_contact_information_validation');
+add_action('wp_head', 'flatstrap_contact_information_validation');
 
-function dism_inline_css() {
-    $options = get_option('dism_theme_options');
-    if ($options['dism_inline_css']) {
+function flatstrap_inline_css() {
+    $options = get_option('flatstrap_theme_options');
+    if ($options['flatstrap_inline_css']) {
 		echo '<!-- Custom CSS Styles -->' . "\n";
         echo '<style type="text/css" media="screen">' . "\n";
-		echo $options['dism_inline_css'] . "\n";
+		echo $options['flatstrap_inline_css'] . "\n";
 		echo '</style>' . "\n";
 	}
 }
 
-add_action('wp_head', 'dism_inline_css');
+add_action('wp_head', 'flatstrap_inline_css');
 	
 /**
  * Create the options page
  */
-function dism_theme_options_do_page() {
+function flatstrap_theme_options_do_page() {
 
 	if (!isset($_REQUEST['settings-updated']))
 		$_REQUEST['settings-updated'] = false;
 	?>
     
     <div class="wrap">
-        <?php screen_icon(); echo "<h2>" . get_current_theme() ." ". __('Theme Options', 'dism') . "</h2>"; ?>
+        <?php screen_icon(); echo "<h2>" . get_current_theme() ." ". __('Theme Options', 'flatstrap') . "</h2>"; ?>
 
 		<?php if (false !== $_REQUEST['settings-updated']) : ?>
-			<div class="updated fade"><p><strong><?php _e('Options Saved', 'dism'); ?></strong></p></div>
+			<div class="updated fade"><p><strong><?php _e('Options Saved', 'flatstrap'); ?></strong></p></div>
 		<?php endif; ?>
 
         <form method="post" action="options.php">
-            <?php settings_fields('dism_options'); ?>
-            <?php $options = get_option('dism_theme_options'); ?>
+            <?php settings_fields('flatstrap_options'); ?>
+            <?php $options = get_option('flatstrap_theme_options'); ?>
 
-            <h3 class="options-heading"><?php _e('Theme Elements', 'dism'); ?></h3>
+            <h3 class="options-heading"><?php _e('Theme Elements', 'flatstrap'); ?></h3>
             <div class="container">
                 <div class="block"> 
-                	<?php _e('Disable Breadcrumb Lists?', 'dism'); ?>
-                	<input id="dism_theme_options[breadcrumb]" name="dism_theme_options[breadcrumb]" type="checkbox" value="1" <?php isset($options['breadcrumb']) ? checked( '1', $options['breadcrumb'] ) : checked('0', '1'); ?> />
-                	<label class="description" for="dism_theme_options[breadcrumb]"><?php _e('Check to disable', 'dism'); ?></label>       
+                	<?php _e('Disable Breadcrumb Lists?', 'flatstrap'); ?>
+                	<input id="flatstrap_theme_options[breadcrumb]" name="flatstrap_theme_options[breadcrumb]" type="checkbox" value="1" <?php isset($options['breadcrumb']) ? checked( '1', $options['breadcrumb'] ) : checked('0', '1'); ?> />
+                	<label class="description" for="flatstrap_theme_options[breadcrumb]"><?php _e('Check to disable', 'flatstrap'); ?></label>       
                 </div>
             </div>
             
-            <h3 class="options-heading"><?php _e('Contact Information', 'dism'); ?></h3>
+            <h3 class="options-heading"><?php _e('Contact Information', 'flatstrap'); ?></h3>
             <div class="container">
                 <div class="block"> 
                 	<div class="row">
-	                	<p><?php _e('Contact Name', 'dism'); ?></p>
-	                	<input id="dism_theme_options[contact_name]" class="regular-text" type="text" name="dism_theme_options[contact_name]" value="<?php if (!empty($options['contact_name'])) esc_attr_e($options['contact_name']); ?>" />
-		                <label class="description" for="dism_theme_options[contact_name]"><?php _e('Enter a contact name', 'dism'); ?></label>
+	                	<p><?php _e('Contact Name', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[contact_name]" class="regular-text" type="text" name="flatstrap_theme_options[contact_name]" value="<?php if (!empty($options['contact_name'])) esc_attr_e($options['contact_name']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[contact_name]"><?php _e('Enter a contact name', 'flatstrap'); ?></label>
                 	</div>
                 	<div class="row">
-	                	<p><?php _e('Address', 'dism'); ?></p>
-	                	<input id="dism_theme_options[address]" class="regular-text" type="text" name="dism_theme_options[address]" value="<?php if (!empty($options['address'])) esc_attr_e($options['address']); ?>" />
-		                <label class="description" for="dism_theme_options[address]"><?php _e('Enter your address', 'dism'); ?></label>
+	                	<p><?php _e('Address', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[address]" class="regular-text" type="text" name="flatstrap_theme_options[address]" value="<?php if (!empty($options['address'])) esc_attr_e($options['address']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[address]"><?php _e('Enter your address', 'flatstrap'); ?></label>
                 	</div>
                 	<div class="row">
-	                	<p><?php _e('Mailing Address', 'dism'); ?></p>
-	                	<input id="dism_theme_options[mailing_address]" class="regular-text" type="text" name="dism_theme_options[mailing_address]" value="<?php if (!empty($options['mailing_address'])) esc_attr_e($options['mailing_address']); ?>" />
-		                <label class="description" for="dism_theme_options[mailing_address]"><?php _e('Enter your mailing address', 'dism'); ?></label>
+	                	<p><?php _e('Mailing Address', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[mailing_address]" class="regular-text" type="text" name="flatstrap_theme_options[mailing_address]" value="<?php if (!empty($options['mailing_address'])) esc_attr_e($options['mailing_address']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[mailing_address]"><?php _e('Enter your mailing address', 'flatstrap'); ?></label>
                 	</div>
                 	<div class="row">
-	                	<p><?php _e('Phone Number', 'dism'); ?></p>
-	                	<input id="dism_theme_options[phone_number]" class="regular-text" type="text" name="dism_theme_options[phone_number]" value="<?php if (!empty($options['phone_number'])) esc_attr_e($options['phone_number']); ?>" />
-		                <label class="description" for="dism_theme_options[phone_number]"><?php _e('Enter your phone number', 'dism'); ?></label>
+	                	<p><?php _e('Phone Number', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[phone_number]" class="regular-text" type="text" name="flatstrap_theme_options[phone_number]" value="<?php if (!empty($options['phone_number'])) esc_attr_e($options['phone_number']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[phone_number]"><?php _e('Enter your phone number', 'flatstrap'); ?></label>
                 	</div>
                 	<div class="row">
-	                	<p><?php _e('Mobile Number', 'dism'); ?></p>
-	                	<input id="dism_theme_options[mobile_number]" class="regular-text" type="text" name="dism_theme_options[mobile_number]" value="<?php if (!empty($options['mobile_number'])) esc_attr_e($options['mobile_number']); ?>" />
-		                <label class="description" for="dism_theme_options[mobile_number]"><?php _e('Enter your mobile number', 'dism'); ?></label>
+	                	<p><?php _e('Mobile Number', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[mobile_number]" class="regular-text" type="text" name="flatstrap_theme_options[mobile_number]" value="<?php if (!empty($options['mobile_number'])) esc_attr_e($options['mobile_number']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[mobile_number]"><?php _e('Enter your mobile number', 'flatstrap'); ?></label>
                 	</div>   
                 	<div class="row">
-	                	<p><?php _e('Fax Number', 'dism'); ?></p>
-	                	<input id="dism_theme_options[fax_number]" class="regular-text" type="text" name="dism_theme_options[fax_number]" value="<?php if (!empty($options['fax_number'])) esc_attr_e($options['fax_number']); ?>" />
-		                <label class="description" for="dism_theme_options[fax_number]"><?php _e('Enter your fax number', 'dism'); ?></label>
+	                	<p><?php _e('Fax Number', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[fax_number]" class="regular-text" type="text" name="flatstrap_theme_options[fax_number]" value="<?php if (!empty($options['fax_number'])) esc_attr_e($options['fax_number']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[fax_number]"><?php _e('Enter your fax number', 'flatstrap'); ?></label>
                 	</div>   
                 	<div class="row">
-	                	<p><?php _e('Email Address', 'dism'); ?></p>
-	                	<input id="dism_theme_options[email_address]" class="regular-text" type="text" name="dism_theme_options[email_address]" value="<?php if (!empty($options['email_address'])) esc_attr_e($options['email_address']); ?>" />
-		                <label class="description" for="dism_theme_options[email_address]"><?php _e('Enter your email address', 'dism'); ?></label>
+	                	<p><?php _e('Email Address', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[email_address]" class="regular-text" type="text" name="flatstrap_theme_options[email_address]" value="<?php if (!empty($options['email_address'])) esc_attr_e($options['email_address']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[email_address]"><?php _e('Enter your email address', 'flatstrap'); ?></label>
                 	</div> 
                 	<div class="row">
-	                	<p><?php _e('Website', 'dism'); ?></p>
-	                	<input id="dism_theme_options[website_address]" class="regular-text" type="text" name="dism_theme_options[website_address]" value="<?php if (!empty($options['website_address'])) esc_attr_e($options['website_address']); ?>" />
-		                <label class="description" for="dism_theme_options[website_address]"><?php _e('Enter your website address', 'dism'); ?></label>
+	                	<p><?php _e('Website', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[website_address]" class="regular-text" type="text" name="flatstrap_theme_options[website_address]" value="<?php if (!empty($options['website_address'])) esc_attr_e($options['website_address']); ?>" />
+		                <label class="description" for="flatstrap_theme_options[website_address]"><?php _e('Enter your website address', 'flatstrap'); ?></label>
                 	</div>        
 	                <div class="row">	
                     	<?php submit_button(); ?>
@@ -794,20 +799,20 @@ function dism_theme_options_do_page() {
                 </div>
             </div>
 
-            <h3 class="options-heading"><?php _e('Webmaster Tools', 'dism'); ?></h3>
+            <h3 class="options-heading"><?php _e('Webmaster Tools', 'flatstrap'); ?></h3>
             <div class="container">
                 <div class="block">        
                 <!-- Site Verification -->
                 	<div class="row">	
-                		<p><?php _e('Google Site Verification', 'dism'); ?></p>
-	                   <input id="dism_theme_options[google_site_verification]" class="regular-text" type="text" name="dism_theme_options[google_site_verification]" value="<?php if (!empty($options['google_site_verification'])) esc_attr_e($options['google_site_verification']); ?>" />
-	                    <label class="description" for="dism_theme_options[google_site_verification]"><?php _e('Enter your Google ID number only', 'dism'); ?></label>
+                		<p><?php _e('Google Site Verification', 'flatstrap'); ?></p>
+	                   <input id="flatstrap_theme_options[google_site_verification]" class="regular-text" type="text" name="flatstrap_theme_options[google_site_verification]" value="<?php if (!empty($options['google_site_verification'])) esc_attr_e($options['google_site_verification']); ?>" />
+	                    <label class="description" for="flatstrap_theme_options[google_site_verification]"><?php _e('Enter your Google ID number only', 'flatstrap'); ?></label>
                 	</div>
                 	<div class="row">	
-					    <p><?php _e('Site Statistics Tracker', 'dism'); ?></p>
-	                    <span class="help-links"><?php _e('Leave blank if plugin handles your webmaster tools', 'dism'); ?></span>
-	                    <textarea id="dism_theme_options[site_statistics_tracker]" class="large-text" cols="50" rows="10" name="dism_theme_options[site_statistics_tracker]"><?php if (!empty($options['site_statistics_tracker'])) esc_attr_e($options['site_statistics_tracker']); ?></textarea>
-	                    <label class="description" for="dism_theme_options[site_statistics_tracker]"><?php _e('Google Analytics Code', 'dism'); ?></label>
+					    <p><?php _e('Site Statistics Tracker', 'flatstrap'); ?></p>
+	                    <span class="help-links"><?php _e('Leave blank if plugin handles your webmaster tools', 'flatstrap'); ?></span>
+	                    <textarea id="flatstrap_theme_options[site_statistics_tracker]" class="large-text" cols="50" rows="10" name="flatstrap_theme_options[site_statistics_tracker]"><?php if (!empty($options['site_statistics_tracker'])) esc_attr_e($options['site_statistics_tracker']); ?></textarea>
+	                    <label class="description" for="flatstrap_theme_options[site_statistics_tracker]"><?php _e('Google Analytics Code', 'flatstrap'); ?></label>
                 	</div>
                     <div class="row">	
                     	<?php submit_button(); ?>
@@ -815,51 +820,51 @@ function dism_theme_options_do_page() {
                 </div>
             </div>
 
-            <h3 class="options-heading"><?php _e('Social Icons', 'dism'); ?></h3>
+            <h3 class="options-heading"><?php _e('Social Icons', 'flatstrap'); ?></h3>
             <div class="container">
                 <div class="block"> 
                  <!-- Social -->
                  
                  	<!-- Twitter -->
 	                <div class="row">
-	                	<p><?php _e('Twitter', 'dism'); ?></p>
-	                	<input id="dism_theme_options[twitter]" class="regular-text" type="text" name="dism_theme_options[twitter]" value="<?php if (!empty($options['twitter'])) esc_attr_e($options['twitter']); ?>" />
-	                	<label class="description" for="dism_theme_options[twitter]"><?php _e('Enter your Twitter URL', 'dism'); ?></label>
+	                	<p><?php _e('Twitter', 'flatstrap'); ?></p>
+	                	<input id="flatstrap_theme_options[twitter]" class="regular-text" type="text" name="flatstrap_theme_options[twitter]" value="<?php if (!empty($options['twitter'])) esc_attr_e($options['twitter']); ?>" />
+	                	<label class="description" for="flatstrap_theme_options[twitter]"><?php _e('Enter your Twitter URL', 'flatstrap'); ?></label>
 	                </div> 
 	                
 	                <!-- Facebook -->
 	                <div class="row">
-	                	<p><?php _e('Facebook', 'dism'); ?></p>
-	                        <input id="dism_theme_options[facebook]" class="regular-text" type="text" name="dism_theme_options[facebook]" value="<?php if (!empty($options['facebook'])) esc_attr_e($options['facebook']); ?>" />
-	                        <label class="description" for="dism_theme_options[facebook]"><?php _e('Enter your Facebook URL', 'dism'); ?></label>
+	                	<p><?php _e('Facebook', 'flatstrap'); ?></p>
+	                        <input id="flatstrap_theme_options[facebook]" class="regular-text" type="text" name="flatstrap_theme_options[facebook]" value="<?php if (!empty($options['facebook'])) esc_attr_e($options['facebook']); ?>" />
+	                        <label class="description" for="flatstrap_theme_options[facebook]"><?php _e('Enter your Facebook URL', 'flatstrap'); ?></label>
 	                </div>
 	                
 	                <!-- Google+ -->
 	                <div class="row">	
-						<p><?php _e('Google+', 'dism'); ?></p>
-						<input id="dism_theme_options[google-plus]" class="regular-text" type="text" name="dism_theme_options[google-plus]" value="<?php if (!empty($options['google-plus'])) esc_attr_e($options['google-plus']); ?>" />  
-						<label class="description" for="dism_theme_options[google-plus]"><?php _e('Enter your Google+ URL', 'dism'); ?></label>
+						<p><?php _e('Google+', 'flatstrap'); ?></p>
+						<input id="flatstrap_theme_options[google-plus]" class="regular-text" type="text" name="flatstrap_theme_options[google-plus]" value="<?php if (!empty($options['google-plus'])) esc_attr_e($options['google-plus']); ?>" />  
+						<label class="description" for="flatstrap_theme_options[google-plus]"><?php _e('Enter your Google+ URL', 'flatstrap'); ?></label>
 					</div>
 					
 					<!-- LinkedIn -->
 	                <div class="row">
-						<p><?php _e('LinkedIn', 'dism'); ?></p>
-						<input id="dism_theme_options[linkedin]" class="regular-text" type="text" name="dism_theme_options[linkedin]" value="<?php if (!empty($options['linkedin'])) esc_attr_e($options['linkedin']); ?>" /> 
-						<label class="description" for="dism_theme_options[linkedin]"><?php _e('Enter your LinkedIn URL', 'dism'); ?></label>
+						<p><?php _e('LinkedIn', 'flatstrap'); ?></p>
+						<input id="flatstrap_theme_options[linkedin]" class="regular-text" type="text" name="flatstrap_theme_options[linkedin]" value="<?php if (!empty($options['linkedin'])) esc_attr_e($options['linkedin']); ?>" /> 
+						<label class="description" for="flatstrap_theme_options[linkedin]"><?php _e('Enter your LinkedIn URL', 'flatstrap'); ?></label>
 					</div>
 					
 					<!-- Instagram -->
 	                <div class="row">	
-						<p><?php _e('Instagram', 'dism'); ?></p>
-						<input id="dism_theme_options[instagram]" class="regular-text" type="text" name="dism_theme_options[instagram]" value="<?php if (!empty($options['instagram'])) esc_attr_e($options['instagram']); ?>" />  
-						<label class="description" for="dism_theme_options[instagram]"><?php _e('Enter your Instagram URL', 'dism'); ?></label>
+						<p><?php _e('Instagram', 'flatstrap'); ?></p>
+						<input id="flatstrap_theme_options[instagram]" class="regular-text" type="text" name="flatstrap_theme_options[instagram]" value="<?php if (!empty($options['instagram'])) esc_attr_e($options['instagram']); ?>" />  
+						<label class="description" for="flatstrap_theme_options[instagram]"><?php _e('Enter your Instagram URL', 'flatstrap'); ?></label>
 					</div>
 					
 					<!-- RSS Feed -->
 	                <div class="row">
-						<p><?php _e('RSS Feed', 'dism'); ?></p>
-						<input id="dism_theme_options[rss]" class="regular-text" type="text" name="dism_theme_options[rss]" value="<?php if (!empty($options['rss'])) esc_attr_e($options['rss']); ?>" /> 
-						<label class="description" for="dism_theme_options[rss]"><?php _e('Enter your RSS Feed URL', 'dism'); ?></label>
+						<p><?php _e('RSS Feed', 'flatstrap'); ?></p>
+						<input id="flatstrap_theme_options[rss]" class="regular-text" type="text" name="flatstrap_theme_options[rss]" value="<?php if (!empty($options['rss'])) esc_attr_e($options['rss']); ?>" /> 
+						<label class="description" for="flatstrap_theme_options[rss]"><?php _e('Enter your RSS Feed URL', 'flatstrap'); ?></label>
 					</div>
 					
 					<div class="row">
@@ -876,7 +881,7 @@ function dism_theme_options_do_page() {
 /**
  * Sanitize and validate input. Accepts an array, return a sanitized array.
  */
-function dism_theme_options_validate($input) {
+function flatstrap_theme_options_validate($input) {
 
 	// checkbox value is either 0 or 1
 	foreach (array(
@@ -903,14 +908,14 @@ function dism_theme_options_validate($input) {
     $input['linkedin'] = esc_url_raw($input['linkedin']);
     $input['instagram'] = esc_url_raw($input['instagram']);
 	$input['rss'] = esc_url_raw($input['rss']);
-	$input['dism_inline_css'] = wp_kses_stripslashes($input['dism_inline_css']);
+	$input['flatstrap_inline_css'] = wp_kses_stripslashes($input['flatstrap_inline_css']);
 	
     return $input;
 }
 
 
 function social_links() {
-	$options = get_option('dism_theme_options');
+	$options = get_option('flatstrap_theme_options');
 	$sociallinks = array(
 		'twitter',
 		'facebook',

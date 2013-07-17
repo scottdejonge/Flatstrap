@@ -19,8 +19,8 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 
 1. Carousel
 2. Slides Post Type
-3. Projects Carousel
-4. Projects Post Type
+3. Contact Form
+4. Sidebar Widgets
 5. Theme Options
 6. Breadcrumbs
 7. Blog

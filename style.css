@@ -172,6 +172,151 @@ ul li, ol li {
 
 
 /*--------------------------------------------------------------------------*/
+/*                              BUTTONS                                     */
+/*--------------------------------------------------------------------------*/
+
+
+
+/* Button */
+
+.btn {
+	background: #EEEEEE;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn.disabled,
+.btn[disabled] {
+	color: #999999;
+	background-color: #CCCCCC;
+	*background-color: #CCCCCC;
+	text-shadow: 0px -1px 0px rgba(0,0,0,0.1), 0px 1px 0px rgba(255,255,255,0.25);
+}
+
+/* Primary */
+
+.btn-primary {
+	background: #00A7CA;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+	color: #00A7CA;
+	background-color: #33BCF3;
+	*background-color: #33BCF3;
+}
+
+/* Info */
+
+.btn-info {
+	background: #3097B5;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.btn-info.disabled,
+.btn-info[disabled] {
+	color: #3097B5;
+	background-color: #43A9C7;
+	*background-color: #43A9C7;
+}
+
+/* Success */
+
+.btn-success {
+	background: #00CE55;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+	color: #00CE55;
+	background-color: #5FD379;
+	*background-color: #5FD379;
+}
+
+/* Warning */
+
+.btn-warning {
+	background: #FFC84E;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active,
+.btn-warning.disabled,
+.btn-warning[disabled] {
+	color: #FFC84E;
+	background-color: #FCD161;
+	*background-color: #FCD161;
+}
+
+/* Danger */
+
+.btn-danger {
+	background: #F13B2F;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.btn-danger.disabled,
+.btn-danger[disabled] {
+	color: #F13B2F;
+	background-color: #FF5144;
+	*background-color: #FF5144;
+}
+
+/* Inverse */
+
+.btn-inverse {
+	background: #747474;
+}
+
+.btn-inverse:hover,
+.btn-inverse:focus,
+.btn-inverse:active,
+.btn-inverse.active,
+.btn-inverse.disabled,
+.btn-inverse[disabled] {
+	color: #747474;
+	background-color: #8A8A8A;
+	*background-color: #8A8A8A;
+}
+
+/* Link */
+
+.btn-link {
+	background: transparent;
+}
+
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active,
+.btn-link.active,
+.btn-link.disabled,
+.btn-link[disabled] {
+	color: #00A7CA;
+	background-color: transparent;
+	*background-color: transparent;
+}
+
+
+
+/*--------------------------------------------------------------------------*/
 /*                               NAVBAR                                     */
 /*--------------------------------------------------------------------------*/
 
@@ -300,8 +445,20 @@ ul li, ol li {
 
 
 /*--------------------------------------------------------------------------*/
-/*                           SUB NAVIGATION                                 */
+/*                             NAVIGATION                                   */
 /*--------------------------------------------------------------------------*/
+
+
+
+/* Breadcrumbs */
+
+ul.breadcrumb {
+	
+}
+
+ul.breadcrumb li {
+	
+}
 
 
 
@@ -689,11 +846,10 @@ footer .nav ul li  {
 }
 
 .carousel-indicators {
-	z-index: 999;
+	z-index: 99;
 	position: absolute;
 	top: auto;
 	bottom: 20px;
-	z-index: 5;
 	margin: 0;
 	list-style: none;
 	text-align: center;

@@ -8,9 +8,11 @@ Template Name: Contact
 if(isset($_POST['submitted'])) {
 
 	//Check to see if the honeypot captcha field was filled in
-	if(trim($_POST['checking']) !== '') {
+	/*
+if(trim($_POST['checking']) !== '') {
 		$captchaError = true;
 	} else {
+*/
 	
 		//Check to make sure that the name field is not empty
 		if(trim($_POST['contactName']) === '') {
@@ -43,47 +45,51 @@ if(isset($_POST['submitted'])) {
 			}
 		}
 		
-		$options = get_option('dism_theme_options');
-			
+		$options = get_option('flatstrap_theme_options');
+		
 		//If there is no error, send the email
 		if(!isset($hasError)) {
 
 			$emailTo = $options['email_address'];
 			$subject = 'Contact Form Submission from '.$name;
-			$sendCopy = trim($_POST['sendCopy']);
 			$body = "Name: $name \n\nEmail: $email \n\nComments: $comments";
 			$headers = 'From: My Site <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
 			
 			mail($emailTo, $subject, $body, $headers);
 
-			if($sendCopy == true) {
-				$subject = 'You emailed Your Name';
-				$headers = 'From: Your Name <noreply@somedomain.com>';
-				mail($email, $subject, $body, $headers);
-			}
-
 			$emailSent = true;
 
 		}
-	}
-} ?>
-
+	/* } */
+} 
+?>
 
 <?php get_header(); ?>
 
 <?php if(isset($emailSent) && $emailSent == true) { ?>
-
-	<div class="thanks">
-		<h1>Thanks, <?=$name;?></h1>
-		<p>Your email was successfully sent. I will be in touch soon.</p>
-	</div>
-
-<?php } else { ?>
-
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<div class="row">
-		<h1 class="span12 page-title"><?php the_title(); ?></h1>
+		<article class="post span8" id="post-<?php the_ID(); ?>">
+			<div class="entry">
+				<p>Your email was successfully sent. Thanks for contacting us! We will get in touch with you shortly.</p>
+			</div>
+		</article>
 	</div>
+<?php } else { ?>
+	
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+	<?php if(has_post_thumbnail()) { ?>
+		<section class="page-header" class="row">
+			<?php the_post_thumbnail('header', array('class' => 'header-image')); ?>
+			<h1 class="page-title"><?php the_title(); ?></h1>
+		</section>
+		<?php get_breadcrumbs(); ?>
+	<?php } else { ?>
+		<?php get_breadcrumbs(); ?>
+		<div class="row">
+			<h1 class="span12 page-title"><?php the_title(); ?></h1>
+		</div>
+	<?php } ?>
+	
 	<div class="row">
 		<article class="post span8" id="post-<?php the_ID(); ?>">
 			<div class="entry">
@@ -95,82 +101,43 @@ if(isset($_POST['submitted'])) {
 				
 				<form class="span8" action="<?php the_permalink(); ?>" method="post">
 					<div class="row">
-						<label for="contactName">Name <span class="required">*</span></label>
-						<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="span5 requiredField" placeholder="Your Name" />
-						<?php if($nameError != '') { ?>
-							<span class="error"><?=$nameError;?></span> 
-						<?php } ?>
-						<label for="email">Email Address <span class="required">*</span></label>
-						<input type="text" id="email" name="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="span5 requiredField email" placeholder="Your email address" />
-						<?php if($emailError != '') { ?>
-							<span class="error"><?=$emailError;?></span>
-						<?php } ?>
-						<label for="subject">Subject <span class="required">*</span></label>
-						<input type="text" id="subject" name="subject" value="<?php echo esc_attr($_POST['subject']); ?>" class="span5" placeholder="Subject" />
-						<label for="message">Message <span class="required">*</span></label>
-						<textarea id="message" name="message" class="input-xlarge span8" rows="10">
-							<?php echo esc_textarea($_POST['message']); ?>
-						</textarea>
-						<input type="hidden" name="submitted" value="1">
-						<input type="submit" value="Send" class="btn btn-primary" />
+						<div class="control-group <?php if($nameError != '') { ?>error<?php } ?>">
+							<label for="contactName" class="control-label">Name <span class="required">*</span></label>
+							<div class="controls">
+								<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="span5 requiredField" placeholder="Your Name" />
+								<?php if($nameError != '') { ?>
+									<span class="help-inline"><?=$nameError;?></span>
+								<?php } ?>
+							</div>
+						</div>
+						<div class="control-group <?php if($emailError != '') { ?>error<?php } ?>">
+							<label for="email">Email Address <span class="required">*</span></label>
+							<div class="controls">
+								<input type="text" id="email" name="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="span5 requiredField email" placeholder="Your email address" />
+								<?php if($emailError != '') { ?>
+									<div class="help-inline"><?=$emailError;?></div>
+								<?php } ?>
+							</div>
+						</div>
+						<div class="control-group <?php if($commentError != '') { ?>error<?php } ?>">
+							<label for="message">Message <span class="required">*</span></label>
+							<div class="controls">
+								<textarea name="comments" id="commentsText" rows="10" cols="30" class="requiredField input-xlarge span8"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
+								<?php if($commentError != '') { ?>
+									<div class="help-inline"><?=$commentError;?></div> 
+								<?php } ?>
+							</div>
+						</div>
+						<input type="hidden" name="submitted" id="submitted" value="true" />
+						<input type="submit" value="Send" class="btn btn-large btn-primary" />
 					</div>
 				</form>
-				
-				<!--
-<form action="<?php the_permalink(); ?>" id="contactForm" method="post">
-	
-					<ol class="forms">
-						<li><label for="contactName">Name</label>
-							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="requiredField" />
-							<?php if($nameError != '') { ?>
-								<span class="error"><?=$nameError;?></span> 
-							<?php } ?>
-						</li>
-						
-						<li><label for="email">Email</label>
-							<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="requiredField email" />
-							<?php if($emailError != '') { ?>
-								<span class="error"><?=$emailError;?></span>
-							<?php } ?>
-						</li>
-						
-						<li class="textarea"><label for="commentsText">Comments</label>
-							<textarea name="comments" id="commentsText" rows="20" cols="30" class="requiredField"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
-							<?php if($commentError != '') { ?>
-								<span class="error"><?=$commentError;?></span> 
-							<?php } ?>
-						</li>
-						<li class="inline"><input type="checkbox" name="sendCopy" id="sendCopy" value="true"<?php if(isset($_POST['sendCopy']) && $_POST['sendCopy'] == true) echo ' checked="checked"'; ?> /><label for="sendCopy">Send a copy of this email to yourself</label></li>
-						<li class="screenReader"><label for="checking" class="screenReader">If you want to submit this form, do not enter anything in this field</label><input type="text" name="checking" id="checking" class="screenReader" value="<?php if(isset($_POST['checking']))  echo $_POST['checking'];?>" /></li>
-						<li class="buttons"><input type="hidden" name="submitted" id="submitted" value="true" /><button type="submit">Email me &raquo;</button></li>
-					</ol>
-				</form>
--->
-				
-				<!--
-<form class="span8" action="<?php the_permalink(); ?>" method="post">
-					<div class="row">
-						<label for="name">Name <span class="required">*</span></label>
-						<input type="text" id="name" name="name" value="<?php echo esc_attr($_POST['name']); ?>" class="span5" placeholder="Your Name" />
-						<label for="email">Email Address <span class="required">*</span></label>
-						<input type="text" id="email" name="email" value="<?php echo esc_attr($_POST['email']); ?>" class="span5" placeholder="Your email address" />
-						<label for="subject">Subject <span class="required">*</span></label>
-						<input type="text" id="subject" name="subject" value="<?php echo esc_attr($_POST['subject']); ?>" class="span5" placeholder="Subject" />
-						<label for="message">Message <span class="required">*</span></label>
-						<textarea id="message" name="message" class="input-xlarge span8" rows="10">
-							<?php echo esc_textarea($_POST['message']); ?>
-						</textarea>
-						<input type="hidden" name="submitted" value="1">
-						<input type="submit" value="Send" class="btn btn-primary" />
-					</div>
-				</form>
--->
 			</div>
 		</article>
 		
 		<aside class="span4">
 			<div class="entry">
-				<?php $options = get_option('dism_theme_options'); ?>
+				<?php $options = get_option('flatstrap_theme_options'); ?>
 				<?php if ($options['contact_name']) { ?>
 					<h3 class="widget-title"><?php echo $options['contact_name'] ?></h3>
 				<?php } else { ?>

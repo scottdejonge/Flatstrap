@@ -20,11 +20,12 @@
 /* Buttons */
 
 .btn {
-	background: #EEEEEE;
+	text-shadow: none;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0; 
 	-o-border-radius: 0;
 	border-radius: 0; 
+	border: none;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
@@ -35,26 +36,6 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-}
-
-.btn-primary {
-	background: #3498DB;
-}
-
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-	color: #FFFFFF;
-	background-color: #2980B9;
-	*background-color: #2980B9;
-}
-
-.btn-primary:active,
-.btn-primary.active {
-  background-color: #003399 \9;
 }
 
 .btn-group>.btn:first-child,
@@ -186,8 +167,9 @@ input[type="search"] {
 }
 
 .navbar .btn-navbar .icon-bar {
-	width: 24px;
-	height: 3px;
+	width: 22px;
+	height: 2px;
+	margin: 4px 0px;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0; 
 	-o-border-radius: 0;
@@ -286,8 +268,18 @@ input[type="search"] {
 }
 
 /*--------------------------------------------------------------------------*/
-/*                             SUB NAVIGATION                               */
+/*                               NAVIGATION                                 */
 /*--------------------------------------------------------------------------*/
+
+ul.breadcrumb {
+	padding: 20px 20px 0px 20px;
+	margin: 0;
+	background: transparent;
+}
+
+ul.breadcrumb li {
+	margin-left: 0px;
+}
 
 ul.sub-navigation.nav-tabs.nav-stacked>li>a {
 	border: none;

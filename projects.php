@@ -31,62 +31,17 @@ Template Name: Projects
 <?php endwhile; endif; ?>
 
 <div class="well">
-	<div id="carousel" class="carousel slide">
-		<ol class="carousel-indicators">
-		    <li data-target="#carousel" data-slide-to="0" class="active"></li>
-		    <li data-target="#carousel" data-slide-to="1"></li>
-		    <li data-target="#carousel" data-slide-to="2"></li>
-		</ol>
-		<div class="carousel-inner">
-			<div class="item active">
-				<div class="row-fluid">
-					<?php $loop = new WP_Query(array('post_type' => 'projects', 'posts_per_page' => 1, 'order' => 'DESC')); ?>
-					<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
-						<div class="span3">
-							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('project-thumb'); ?></a>
-						</div>
-					<?php endwhile; wp_reset_postdata(); ?>
-					<?php $loop = new WP_Query(array('post_type' => 'projects', 'posts_per_page' => 3, 'offset' => 1,  'order' => 'DESC')); ?>
-					<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
-						<div class="span3">
-							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('project-thumb'); ?></a>
-						</div>
-					<?php endwhile; wp_reset_postdata(); ?>
-				</div>
-			</div>
-			<div class="item">
-				<div class="row-fluid">
-					<?php $loop = new WP_Query(array('post_type' => 'projects', 'posts_per_page' => 4, 'offset' => 4,  'order' => 'DESC')); ?>
-					<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
-						<div class="span3">
-							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('project-thumb'); ?></a>
-						</div>
-					<?php endwhile; wp_reset_postdata(); ?>
-				</div>
-			</div>
-			<!--
-<div class="item active">
-				<div class="row-fluid">
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="row-fluid">
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-					<div class="span3"><a href="#"><img src="http://placehold.it/250x250" alt="Image" /></a></div>
-				</div>
-			</div>
--->
-			
-		</div>
-		<a class="carousel-direction left" href="#carousel" data-slide="prev"><i class="icon-angle-left"></i></a>
-		<a class="carousel-direction right" href="#carousel" data-slide="next"><i class="icon-angle-right"></i></a>
+	<div class="row">
+	<?php $loop = new WP_Query(array('post_type' => 'projects', 'order' => 'DESC')); ?>
+	<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
+	
+		<article class="span3">
+			<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('project-thumb'); ?></a>
+			<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+		</article>
+	
+	<?php endwhile; ?>
 	</div>
-</div>	
+</div>
 
 <?php get_footer(); ?>

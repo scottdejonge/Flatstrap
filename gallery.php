@@ -12,8 +12,10 @@ Template Name: Gallery
 		<section class="page-header" class="row">
 			<?php the_post_thumbnail('header', array('class' => 'header-image')); ?>
 			<h1 class="page-title"><?php the_title(); ?></h1>
-		</section>			
+		</section>
+		<?php get_breadcrumbs(); ?>
 	<?php } else { ?>
+		<?php get_breadcrumbs(); ?>
 		<div class="row">
 			<h1 class="span12 page-title"><?php the_title(); ?></h1>
 		</div>

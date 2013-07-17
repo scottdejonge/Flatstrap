@@ -8,5 +8,5 @@
 				<?php get_search_form(); ?>
 			</div>
 		</article>
-	</div>
+	</div> 
 <?php get_footer(); ?>

@@ -25,14 +25,27 @@
 								<?php if(has_post_thumbnail()) { ?>
 									<a href="<?php the_permalink(); ?>" class="featured-image"><?php the_post_thumbnail('medium'); ?></a>	
 								<?php } ?>
-								<h3 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-								<div class="post-meta">
-									<time datetime="<?php echo date(DATE_W3C); ?>" pubdate class="updated"><?php the_time('j F Y') ?></time>
-									<?php the_category(' '); ?>
-									<?php if( has_tag() ) { ?><?php the_tags('',''); ?><?php } ?>
-								</div>
-								<p class="post-excerpt"><?php echo get_the_excerpt(); ?></p>
-								<?php //social_buttons() ?>
+								<h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+								<ul class="post-meta">
+									<li class="meta">
+										<i class="icon-user"></i> by <?php the_author_posts_link(); ?>
+									</li>
+									<li class="meta">
+										<i class="icon-calendar"></i> <time datetime="<?php echo date(DATE_W3C); ?>" pubdate class="updated"><?php the_time('j F Y') ?></time>
+									</li>
+									<li class="meta">
+										<i class="icon-comment"></i> <?php comments_popup_link(__('0 comments','example'),__('1 comment','example'),__('% comments','example')); ?>
+									</li>
+									<li class="meta">
+										<i class="icon-tag"></i> <?php the_category(' '); ?>
+									</li>
+									<?php if(has_tag()) { ?>
+									<li class="meta">
+										<i class="icon-tags"></i> <?php the_tags( '<span class="label label-info">', '</span><span class="label label-info">', '</span>' ); ?>
+									</li>
+									<?php } ?>
+								</ul>
+								<?php the_excerpt(); ?>
 							</div>
 						</article>
 						
