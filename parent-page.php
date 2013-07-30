@@ -17,19 +17,19 @@ Template Name: Parent Page
 	<?php } else { ?>
 		<?php get_breadcrumbs(); ?>
 		<div class="row">
-			<h1 class="span12 page-title"><?php the_title(); ?></h1>
+			<h1 class="col-lg-12 page-title"><?php the_title(); ?></h1>
 		</div>
 	<?php } ?>
 	
 	<div class="row">
-		<article class="post span8" id="post-<?php the_ID(); ?>">
+		<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
 			<div class="entry">
 				<?php the_content(); ?>
 				<?php the_edit_link(); ?>
 			</div>
 		</article>
 		
-		<aside class="span4">
+		<aside class="col-lg-4">
 			<?php sub_navigation(); ?>
 		</aside>
 	</div>	

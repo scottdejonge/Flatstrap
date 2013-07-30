@@ -17,7 +17,7 @@
 			<?php } ?>
 			
 			<div class="row">
-				 <div class="span8">
+				 <div class="col-lg-8">
 				 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 					
 						<article class="post" id="post-<?php the_ID(); ?>">
@@ -52,7 +52,7 @@
 					<?php endwhile; ?>
 				 </div>
 				 
-				<div class="span4">
+				<div class="col-lg-4">
 				 	<?php get_sidebar(); ?>
 				</div>
 				
@@ -62,7 +62,7 @@
 			</div>
 		
 			<div class="row">
-				<div class="span12">
+				<div class="col-lg-12">
 					<?php the_pagination(); ?>
 				</div>
 			</div>

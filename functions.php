@@ -128,7 +128,7 @@ add_image_size( 'project-thumb', 250, 250, true );
 
 function the_edit_link() {
 	if (is_user_logged_in()) {
-		echo '<a href="'.get_edit_post_link().'" class="edit btn btn-mini pull-right" id="non-printable" type="button"><i class="icon-edit"></i> Edit</a>';
+		echo '<a href="'.get_edit_post_link().'" class="edit btn btn-small btn-default pull-right" type="button"><i class="icon-edit"></i> Edit</a>';
 		echo '<div class="clearfix"></div>';
 	}
 }
@@ -155,7 +155,7 @@ add_filter('excerpt_length', 'new_excerpt_length');
 
 function new_excerpt_more($more) {
     global $post;
-	return '... <a class="read-more" id="non-printable" href="'. get_permalink($post->ID) . '">(Read More)</a>';
+	return '... <a class="read-more" href="'. get_permalink($post->ID) . '">(Read More)</a>';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
 
@@ -206,10 +206,10 @@ add_filter( 'show_admin_bar', '__return_false' );
 if(function_exists('register_sidebar'))
 	register_sidebar(array(
 		'name' => 'Sidebar',
-		'before_widget' => '<div id="non-printable" class="sidebar-widget">',
+		'before_widget' => '<div class="sidebar-widget">',
 		'after_widget' => '</div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
+		'before_title' => '<h4 class="widget-title">',
+		'after_title' => '</h4>',
 ));
 
 
@@ -290,7 +290,7 @@ function sub_navigation() {
 	} else {
 		$id = $post->ID;
 	}
-	echo '<ul class="sub-navigation nav nav-tabs nav-stacked">';
+	echo '<ul class="nav nav-pills nav-stacked">';
 	wp_list_pages('title_li=&child_of=' . $id );
 	echo '</ul>';
 }
@@ -318,34 +318,33 @@ function the_pagination($pages = '', $range = 2) {
          if(!$pages) {
              $pages = 1;
          }
-     }   
+     }
+     
+     if(1 != $pages) {
+		echo '<ul class="pagination">';
+			if($paged > 2 && $paged > $range+1 && $showitems < $pages) {
+				echo '<li><a href="'.get_pagenum_link(1).'"><i class="icon-double-angle-left"></i></a></li>';
+			}
+			if($paged > 1 && $showitems < $pages) {
+				echo '<li><a href="'.get_pagenum_link($paged - 1).'"><i class="icon-angle-left"></i></a></li>';
+			}
+			for ($i=1; $i <= $pages; $i++) {
+				if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
+					echo ($paged == $i)? 
+					'<li class="disabled active"><a href="">'.$i.'</a></li>':'<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
+				}
+			}
 
-	if(1 != $pages) {
-		echo '<div class="btn-toolbar span12 pagination-centered">';
-			echo '<div class="btn-group">';
-				if($paged > 2 && $paged > $range+1 && $showitems < $pages) {
-					echo '<a class="btn unavailable" href='.get_pagenum_link(1).'>&larr;|</a>';
-				}
-				if($paged > 1 && $showitems < $pages) {
-					echo '<a class="btn" href="'.get_pagenum_link($paged - 1).'">&larr;</a>';
-				}
-				for ($i=1; $i <= $pages; $i++) {
-					if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
-						echo ($paged == $i)? '<button class="btn disabled current">'.$i.'</button>':'<a class="btn" href='.get_pagenum_link($i).' class="inactive" >'.$i.'</a></button>';
-					}
-				}
-	
-				if ($paged < $pages && $showitems < $pages) {
-					echo '<a class="btn" href="'.get_pagenum_link($paged + 1).'">&rarr;|</a>';  
-				}
-				if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) {
-					echo '<a class="btn" href="'.get_pagenum_link($pages).'">&rarr;</a>';
-				}
-			echo '</div>';
+			if ($paged < $pages && $showitems < $pages) {
+				echo '<li><a href="'.get_pagenum_link($paged + 1).'" class=""><i class="icon-angle-right"></i></a></li>';
+			}
+			if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) {
+				echo '<li><a href="'.get_pagenum_link($pages).'" class=""><i class="icon-double-angle-right"></i></a></li>';
+			}
 		echo "</div>\n";
 	}
 }
-    
+
 
 
 /*--------------------------------------------------------------------------*/
@@ -458,10 +457,43 @@ function breadcrumb_lists() {
 function get_breadcrumbs() { 
 	$options = get_option('flatstrap_theme_options');
 	if ($options['breadcrumb'] == 0) {
+		echo '<div class="col-lg-12">';
 		echo breadcrumb_lists();
+		echo '</div>';
     }
 }
 
+
+
+/*--------------------------------------------------------------------------*/
+/*                              POST META                                   */
+/*--------------------------------------------------------------------------*/
+
+
+//Post Meta
+function post_meta() {
+	echo '<ul class="post-meta">';
+		echo '<li class="meta"><i class="icon-user"></i> by ';
+		the_author_posts_link();
+		echo '</li>';
+		echo '<li class="meta"><i class="icon-calendar"></i> <time datetime="';
+		date(DATE_W3C);
+		echo '" pubdate class="updated">';
+		the_time('j F Y');
+		echo '</time></li>';
+		echo '<li class="meta"><i class="icon-comment"></i> ';
+		comments_popup_link(__('0 comments','example'),__('1 comment','example'),__('% comments','example'));
+		echo '</li>';
+		echo '<li class="meta"><i class="icon-tag"></i> ';
+		the_category(' ');
+		echo '</li>';
+		if(has_tag()) {
+			echo '<li class="meta"><i class="icon-tags"></i> ';
+			the_tags( '<span class="label">', '</span><span class="label">', '</span>' );
+			echo '</li>';
+		}
+	echo '</ul>';
+}
 
 
 /*--------------------------------------------------------------------------*/
@@ -636,9 +668,8 @@ function mytheme_comment($comment, $args, $depth) {
 	
 		<?php comment_text() ?>
 	
-		<button class="btn btn-mini reply">
-			<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-		</button>
+		<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+		
 	<?php if ( 'div' != $args['style'] ) : ?>
 		</div>
 	<?php endif; ?>
@@ -925,7 +956,7 @@ function social_links() {
 		'rss'
 	);
 	
-	echo '<ul id="menu" class="nav social pull-right">';
+	echo '<ul id="menu" class="nav nav navbar-nav social pull-right">';
 		foreach($sociallinks as $sociallink) {
 			if ($options[$sociallink]) {
 				echo '<li class="menu-item"><a href="'. $options[$sociallink] .'" class="'. $sociallink .'"><i class="icon-'. $sociallink .'"></i></a></li>';

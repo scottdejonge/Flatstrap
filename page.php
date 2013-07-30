@@ -3,29 +3,35 @@
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 	<?php if(has_post_thumbnail()) { ?>
-		<section class="page-header" class="row">
+		<section class="page-header">
 			<?php the_post_thumbnail('header', array('class' => 'header-image')); ?>
-			<h1 class="page-title"><?php the_title(); ?></h1>
+			<div class="container">
+				<h1 class="page-title"><?php the_title(); ?></h1>
+			</div>
 		</section>
-		<?php get_breadcrumbs(); ?>
-	<?php } else { ?>
-		<?php get_breadcrumbs(); ?>
-		<div class="row">
-			<h1 class="span12 page-title"><?php the_title(); ?></h1>
-		</div>
 	<?php } ?>
 	
-	<div class="row">
-		<article class="post span8" id="post-<?php the_ID(); ?>">
-			<div class="entry">
-				<?php the_content(); ?>
-				<?php the_edit_link(); ?>
+	<div id="content" class="container">
+		<?php if(!has_post_thumbnail()) { ?>
+			<div class="row">
+				<div class="entry">
+					<h1 class="page-title col-lg-12"><?php the_title(); ?></h1>
+				</div>
 			</div>
-		</article>
-		
-		<aside class="span4">
-			<?php get_sidebar(); ?>
-		</aside>
+		<?php } ?>
+		<div class="row">
+			<?php get_breadcrumbs(); ?>
+			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
+				<div class="entry">
+					<?php the_content(); ?>
+					<?php the_edit_link(); ?>
+				</div>
+			</article>
+			
+			<aside class="col-lg-4">
+				<?php get_sidebar(); ?>
+				</aside>
+		</div>
 	</div>	
 <?php endwhile; endif; ?>
 	

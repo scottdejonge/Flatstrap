@@ -1,7 +1,7 @@
 Flatstrap
 =========
 
-Version 1.0
+Version 1.1
 
 Demo: http://flatstrap.scottdejonge.com
 
@@ -11,7 +11,7 @@ Scott de Jonge [@scottdejonge](https://twitter.com/scottdejonge)
 
 ## Summary
 
-A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.github.io/bootstrap/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and Custom Wordpress Functions and Flat Elements.
+A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.github.io/bootstrap/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and Custom Wordpress Functions.
 
 ## Usage
 
@@ -45,6 +45,17 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 * Gallery
 
 ### Changelog
+
+#### Version 1.1
+
+* Implemented with Bootstrap 3.0 RC1
+* Fixed Contact Form error messages
+* New Homepage Slider
+* Page Templates with Featured Image fit full browser width
+* Search Bar removed button
+* Blog Featured Images made smaller
+* Relocated repeated elements (i.e. Post Meta) to functions.php
+* Pagination uses Boostrap pagination and Font-Awesome Icons
 
 #### Version 1.0
 

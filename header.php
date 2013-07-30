@@ -38,24 +38,24 @@
 	<?php wp_head(); ?>
 </head>
 
-<body>	
+<body>
 
-<nav class="navbar navbar-static-top">
-	<div class="navbar-inverse">
-		<div class="container">
-			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</a>
-			<a class="brand" href="<?php bloginfo('url'); ?>" title="<?php echo get_bloginfo('name'); ?>" alt="<?php echo get_bloginfo('name'); ?>"><?php echo get_bloginfo('name'); ?></a>
-			<div class="nav-collapse collapse">
-				<?php wp_nav_menu(array('main-menu' => 'Main Menu', 'depth' => 0,'container_class' => '', 'menu_class' => 'nav', 'menu_id' => 'menu', 'walker' => new wp_bootstrap_navwalker())); ?>
-				<?php social_links(); ?>
-			</div>
+<?php if((is_home()) || (is_front_page())) { ?><div class="navbar-wrapper"><?php } ?>
+	<nav class="navbar navbar-inverse navbar-static-top <?php if((is_home()) || is_front_page()) { ?>container<?php } ?>">
+	<?php if((!is_home()) || !is_front_page()) { ?><div class="container"><?php } ?>
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php echo get_bloginfo('name'); ?>" alt="<?php echo get_bloginfo('name'); ?>"><?php echo get_bloginfo('name'); ?></a>
+		<div class="nav-collapse collapse navbar-responsive-collapse">
+			<?php wp_nav_menu(array('main-menu' => 'Main Menu', 'depth' => 0,'container_class' => '', 'menu_class' => 'nav navbar-nav', 'menu_id' => 'menu', 'walker' => new wp_bootstrap_navwalker())); ?>
+			<?php social_links(); ?>
 		</div>
-	</div>
-</nav>
+		<?php if((!is_home()) && !is_front_page()) { ?></div><?php } ?>
+	</nav>
+<?php if((is_home()) || (is_front_page())) { ?></div><?php } ?>
 
 <!--[if lt IE 7]>
 	<div class="alert container" style="margin-top: 20px;">
@@ -63,5 +63,3 @@
 		<span class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</span>
 	</div>
 <![endif]-->
-
-<div id="content" class="container">

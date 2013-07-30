@@ -11,13 +11,16 @@
 		<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 			<div class="item">
 				<?php the_post_thumbnail('slide'); ?>
-				<div class="carousel-content">
+				<div class="carousel-caption">
 					 <h1><?php the_title();?></h1>
 					 <p><?php the_excerpt();?></p>
+					 <?php if (get_post_meta($post->ID,'url',true) != '') { ?>
+						<p><a href="<?php echo get_post_meta($post->ID,'url',true); ?>" class="btn btn-primary"><?php echo get_post_meta($post->ID,'linkname',true); ?></a></p>
+					<?php } ?>
 				</div>
 			</div>
 		<?php endwhile; ?>
 	</div>
-	<a class="carousel-direction left" href="#carousel" data-slide="prev"><i class="icon-angle-left"></i></a>
-	<a class="carousel-direction right" href="#carousel" data-slide="next"><i class="icon-angle-right"></i></a>
+	<a class="left carousel-control" href="#carousel" data-slide="prev"><i class="icon-angle-left"></i></a>
+	<a class="right carousel-control" href="#carousel" data-slide="next"><i class="icon-angle-right"></i></a>
 </section>

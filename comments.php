@@ -1,4 +1,4 @@
-<div class="post">			
+<div class="comments">			
 	<div class="entry">
 	<?php
 	
@@ -48,7 +48,7 @@
 			<?php else : ?>
 		
 		
-			<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform" class="form-horizontal">
+			<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
 
 				<?php if ( $user_ID ) : ?>
 				
@@ -56,39 +56,33 @@
 				
 				<?php else : ?>
 				
-				  <div class="control-group">
+				  <div class="form-group">
 				     <label class="control-label" for="author">Name</label>
 				     <div class="controls">
-				        <input type="text" class="input-large" name="author" id="author" value="<?php echo $comment_author; ?>" <?php if ($req) echo "required"; ?>>
+				        <input type="text" class="form-control" name="author" id="author" value="<?php echo $comment_author; ?>" <?php if ($req) echo "required"; ?>>
 				     </div>
 				  </div>  
 				
-				  <div class="control-group">
-				     <label class="control-label" for="email">Email</label>
-				     <div class="controls">
-				        <input type="text" class="input-large" name="email" id="email" value="<?php echo $comment_author_email; ?>" <?php if ($req) echo "required"; ?>>
-				     </div>
+				  <div class="form-group">
+						<label class="control-label" for="email">Email</label>
+						<input type="text" class="form-control" name="email" id="email" value="<?php echo $comment_author_email; ?>" <?php if ($req) echo "required"; ?>>
 				  </div>
 				
-				  <div class="control-group">
+				  <div class="form-group">
 				     <label class="control-label" for="url">Website</label>
-				     <div class="controls">
-				        <input type="text" class="input-large" name="url" id="url" value="<?php echo $comment_author_url; ?>" >
-				     </div>
+				     <input type="text" class="form-control" name="url" id="url" value="<?php echo $comment_author_url; ?>" >
 				  </div> 
 				
 				<?php endif; ?>
 				
-				  <div class="control-group">
+				  <div class="form-group">
 				     <label class="control-label" for="comment">Comment</label>
-				     <div class="controls">
-				        <textarea class="input-xlarge" name="comment" id="comment" rows="3"></textarea>
-				     </div>
+				      <textarea class="form-control" name="comment" id="comment" rows="8"></textarea>
 				  </div> 
 				
 				  <div class="form-actions">
-				     <input name="submit" type="submit" id="comment-submit" tabindex="5" value="Comment" class="btn" />
-				     <button type="reset" class="btn">Reset</button>
+				     <input name="submit" type="submit" id="comment-submit" tabindex="5" value="Comment" class="btn btn-default" />
+				     <button type="reset" class="btn btn-danger">Reset</button>
 				  </div>
 				
 					<p>
