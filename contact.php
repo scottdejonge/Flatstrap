@@ -66,6 +66,8 @@ if(trim($_POST['checking']) !== '') {
 
 <?php get_header(); ?>
 
+<?php get_breadcrumbs(); ?>
+
 <div id="content" class="container">
 
 	<?php if(isset($emailSent) && $emailSent == true) { ?>
@@ -90,7 +92,6 @@ if(trim($_POST['checking']) !== '') {
 		<?php } ?>
 		
 		<div class="row">
-			<?php get_breadcrumbs(); ?>
 			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
 				<div class="entry">
 					<?php if(!has_post_thumbnail()) { ?>

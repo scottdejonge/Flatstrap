@@ -4,8 +4,6 @@ Template Name: Child Page
 */
 ?>
 
-
-
 <?php get_header(); ?>
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -19,9 +17,10 @@ Template Name: Child Page
 		</section>
 	<?php } ?>
 	
+	<?php get_breadcrumbs(); ?>
+	
 	<div id="content" class="container">
 		<div class="row">
-			<?php get_breadcrumbs(); ?>
 			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
 				<div class="entry">
 					<?php if(!has_post_thumbnail()) { ?><h1 class="page-title"><?php the_title(); ?></h1><?php } ?>

@@ -457,8 +457,12 @@ function breadcrumb_lists() {
 function get_breadcrumbs() { 
 	$options = get_option('flatstrap_theme_options');
 	if ($options['breadcrumb'] == 0) {
-		echo '<div class="col-lg-12">';
-		echo breadcrumb_lists();
+		echo '<div class="breadcrumbs container">';
+			echo '<div class="row">';
+				echo '<div class="col-lg-6">';
+					echo breadcrumb_lists();
+				echo '</div>';
+			echo '</div>';
 		echo '</div>';
     }
 }
@@ -484,7 +488,7 @@ function post_meta() {
 		echo '<li class="meta"><i class="icon-comment"></i> ';
 		comments_popup_link(__('0 comments','example'),__('1 comment','example'),__('% comments','example'));
 		echo '</li>';
-		echo '<li class="meta"><i class="icon-tag"></i> ';
+		echo '<li class="meta"><i class="icon-folder-close"></i> ';
 		the_category(' ');
 		echo '</li>';
 		if(has_tag()) {

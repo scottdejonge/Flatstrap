@@ -6,7 +6,7 @@ Template Name: Home
 
 <?php get_header(); ?>
 
-<?php get_template_part('slides'); ?>	
+<?php get_template_part('slides'); ?>
 
 <div id="content" class="container">
 

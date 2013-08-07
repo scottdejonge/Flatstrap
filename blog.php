@@ -18,9 +18,10 @@ Template Name: Blog
 	<?php } ?>
 	
 <?php endwhile; endif; ?>
+
+<?php get_breadcrumbs(); ?>
 	
 <div id="content" class="container">
-	<?php get_breadcrumbs(); ?>
 	<?php if(!has_post_thumbnail()) { ?>
 		<div class="row">
 			<div class="entry">

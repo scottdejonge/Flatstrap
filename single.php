@@ -1,6 +1,9 @@
 <?php get_header(); ?>
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
+	<?php get_breadcrumbs(); ?>
+	
 	<div id="content" class="container">
 		<div class="row">
 			<div class="entry">

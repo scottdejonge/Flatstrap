@@ -11,6 +11,8 @@
 		</section>
 	<?php } ?>
 	
+	<?php get_breadcrumbs(); ?>
+	
 	<div id="content" class="container">
 		<?php if(!has_post_thumbnail()) { ?>
 			<div class="row">
@@ -20,7 +22,6 @@
 			</div>
 		<?php } ?>
 		<div class="row">
-			<?php get_breadcrumbs(); ?>
 			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
 				<div class="entry">
 					<?php the_content(); ?>

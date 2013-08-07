@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
+	<?php get_breadcrumbs(); ?>
+	
 	<div id="content" class="container">
 	
 		<div class="row">

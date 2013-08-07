@@ -4,7 +4,7 @@ Theme URI: http://flatstrap.scottdejonge.com
 Description: A Wordpress theme using Bootstrap.
 Author: Scott de Jonge
 Author URI: http://www.scottdejonge.com
-Version: 1.0
+Version: 1.1
 */
 
 @import url("css/normalize.css");
@@ -252,7 +252,7 @@ ul, ol {
 
 ul.breadcrumb {
 	margin: 0;
-	padding: 20px;
+	padding: 15px 0px 5px 0px;
 	background: transparent;
 }
 

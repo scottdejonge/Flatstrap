@@ -17,9 +17,10 @@ Template Name: Sitemap
 		</section>
 	<?php } ?>
 	
+	<?php get_breadcrumbs(); ?>
+	
 	<div id="content" class="container">
 		<div class="row">
-			<?php get_breadcrumbs(); ?>
 			<article class="post col-lg-12" id="post-<?php the_ID(); ?>">
 				<div class="entry">
 					<?php if(!has_post_thumbnail()) { ?>
