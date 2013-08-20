@@ -9,6 +9,7 @@ Version: 1.1
 
 @import url("css/normalize.css");
 @import url("css/bootstrap.min.css");
+@import url("css/bootstrap-theme.min.css");
 @import url("css/font-awesome.min.css");
 
 
@@ -34,7 +35,7 @@ body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
 	font-style: normal;
 	text-rendering: optimizeLegibility; 
-	background: #E9ECF1;
+	background: #FFFFFF;
 }
 
 body, select, input, textarea {}
@@ -360,14 +361,6 @@ ul.pagination {
 .post {
 	position: relative;
 	margin-bottom: 20px;
-}
-
-.entry {
-	padding: 10px 20px;
-}
-
-.entry ul, ol {
-	margin-left: 20px;
 }
 
 /* Post Image */

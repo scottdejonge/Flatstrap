@@ -6,20 +6,16 @@
 	
 	<div id="content" class="container">
 		<div class="row">
-			<div class="entry">
-				<h1 class="col-lg-12 page-title"><?php the_title(); ?></h1>
-			</div>
+			<h1 class="col-lg-12 page-title"><?php the_title(); ?></h1>
 		</div>
 			
 		<div class="row">
 			<div class="col-lg-8">
 		 	
 				<article class="post" id="post-<?php the_ID(); ?>">
-					<div class="entry">
-						<?php the_post_thumbnail('large', array('class' => 'featured-image')); ?>
-						<?php post_meta(); ?>
-						<?php the_content(); ?>
-					</div>
+					<?php the_post_thumbnail('large', array('class' => 'featured-image')); ?>
+					<?php post_meta(); ?>
+					<?php the_content(); ?>
 				</article>
 				
 				<?php comments_template(); ?>

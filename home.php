@@ -14,11 +14,9 @@ Template Name: Home
 	
 		<div class="row">
 			<article class="post col-lg-12" id="post-<?php the_ID(); ?>">
-				<div class="entry">
-					<h1 class="page-title"><?php the_title(); ?></h1>
-					<?php the_content(); ?>
-					<?php the_edit_link(); ?>
-				</div>
+				<h1 class="page-title"><?php the_title(); ?></h1>
+				<?php the_content(); ?>
+				<?php the_edit_link(); ?>
 			</article>
 		</div>
 	

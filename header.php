@@ -41,16 +41,22 @@
 <body>
 
 <?php if((is_home()) || (is_front_page())) { ?><div class="navbar-wrapper"><?php } ?>
-	<nav class="navbar navbar-inverse navbar-static-top <?php if((is_home()) || is_front_page()) { ?>container<?php } ?>">
-	<?php if((!is_home()) || !is_front_page()) { ?><div class="container"><?php } ?>
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php echo get_bloginfo('name'); ?>" alt="<?php echo get_bloginfo('name'); ?>"><?php echo get_bloginfo('name'); ?></a>
-		<div class="nav-collapse collapse navbar-responsive-collapse">
-			<?php wp_nav_menu(array('main-menu' => 'Main Menu', 'depth' => 0,'container_class' => '', 'menu_class' => 'nav navbar-nav', 'menu_id' => 'menu', 'walker' => new wp_bootstrap_navwalker())); ?>
+	<nav class="navbar navbar-defaul navbar-inverse navbar-static-top <?php if((is_home()) || is_front_page()) { ?>container<?php } ?>" role="navigation">
+	<?php if((!is_home()) && !is_front_page()) { ?><div class="container"><?php } ?>
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php echo get_bloginfo('name'); ?>" alt="<?php echo get_bloginfo('name'); ?>"><?php echo get_bloginfo('name'); ?></a>
+		</div>
+	
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+
+				<?php wp_nav_menu(array('main-menu' => 'Main Menu', 'depth' => 0,'container_class' => '', 'menu_class' => 'nav navbar-nav', 'menu_id' => 'menu', 'walker' => new wp_bootstrap_navwalker())); ?>
+			
 			<?php social_links(); ?>
 		</div>
 		<?php if((!is_home()) && !is_front_page()) { ?></div><?php } ?>

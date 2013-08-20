@@ -16,22 +16,18 @@
 	<div id="content" class="container">
 		<?php if(!has_post_thumbnail()) { ?>
 			<div class="row">
-				<div class="entry">
-					<h1 class="page-title col-lg-12"><?php the_title(); ?></h1>
-				</div>
+				<h1 class="page-title col-lg-12"><?php the_title(); ?></h1>
 			</div>
 		<?php } ?>
 		<div class="row">
 			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
-				<div class="entry">
-					<?php the_content(); ?>
-					<?php the_edit_link(); ?>
-				</div>
+				<?php the_content(); ?>
+				<?php the_edit_link(); ?>
 			</article>
 			
 			<aside class="col-lg-4">
 				<?php get_sidebar(); ?>
-				</aside>
+			</aside>
 		</div>
 	</div>	
 <?php endwhile; endif; ?>

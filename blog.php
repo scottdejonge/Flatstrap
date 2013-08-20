@@ -24,9 +24,7 @@ Template Name: Blog
 <div id="content" class="container">
 	<?php if(!has_post_thumbnail()) { ?>
 		<div class="row">
-			<div class="entry">
-				<h1 class="page-title col-lg-12"><?php the_title(); ?></h1>
-			</div>
+			<h1 class="page-title col-lg-12"><?php the_title(); ?></h1>
 		</div>
 	<?php } ?>
 	<div class="row">
@@ -35,24 +33,22 @@ Template Name: Blog
 		 	<?php if (have_posts()) : while ( $loop->have_posts() ) : $loop->the_post(); ?>
 			
 				<article class="post" id="post-<?php the_ID(); ?>">
-					<div class="entry">
-						<?php if(has_post_thumbnail()) { ?>
-							<div class="row">
-								<div class="col-lg-4">
-									<?php the_post_thumbnail('large', array('class' => 'featured-image')); ?>
-								</div>
-								<div class="col-lg-8">
-									<h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-									<?php post_meta(); ?>
-									<?php the_excerpt(); ?>
-								</div>
+					<?php if(has_post_thumbnail()) { ?>
+						<div class="row">
+							<div class="col-lg-4">
+								<?php the_post_thumbnail('large', array('class' => 'featured-image')); ?>
 							</div>
-						<?php } else { ?>
-							<h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-							<?php post_meta(); ?>
-							<?php the_excerpt(); ?>
-						<?php } ?>
-					</div>
+							<div class="col-lg-8">
+								<h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+								<?php post_meta(); ?>
+								<?php the_excerpt(); ?>
+							</div>
+						</div>
+					<?php } else { ?>
+						<h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+						<?php post_meta(); ?>
+						<?php the_excerpt(); ?>
+					<?php } ?>
 				</article>
 				
 			<?php endwhile; endif; ?>

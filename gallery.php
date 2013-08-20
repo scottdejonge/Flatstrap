@@ -22,13 +22,11 @@ Template Name: Gallery
 	<div id="content" class="container">
 		<div class="row">
 			<article class="post col-lg-12" id="post-<?php the_ID(); ?>">
-				<div class="entry">
-					<?php if(!has_post_thumbnail()) { ?>
-						<h1 class="page-title"><?php the_title(); ?></h1>
-					<?php } ?>
-					<?php the_content(); ?>
-					<?php the_edit_link(); ?>
-				</div>
+				<?php if(!has_post_thumbnail()) { ?>
+					<h1 class="page-title"><?php the_title(); ?></h1>
+				<?php } ?>
+				<?php the_content(); ?>
+				<?php the_edit_link(); ?>
 			</article>
 		</div>
 	</div>	

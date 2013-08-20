@@ -1,7 +1,7 @@
 Flatstrap
 =========
 
-Version 1.1
+Version 1.2
 
 Demo: http://flatstrap.scottdejonge.com
 
@@ -40,11 +40,19 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 * Parent-Page
 * Child-Page
 * Sitemap
-* Projects
 * Contact
 * Gallery
 
 ### Changelog
+
+#### Version 1.2
+
+* Implemented with Bootstrap 3.0
+* Fixed Navbar to use nested Brand
+* Included `bootstrap-theme.css` & `bootstrap-theme.min.css`
+* Removed unnecessary padding from content
+* Removed repeated post meta, now contained in `functions.php` under the function `post_meta()`
+* Removed body background color
 
 #### Version 1.1
 
