@@ -1,7 +1,7 @@
 Flatstrap
 =========
 
-Version 1.2
+Version 1.3
 
 Demo: http://flatstrap.scottdejonge.com
 
@@ -42,8 +42,17 @@ A [Wordpress](http://wordpress.org/) Theme using [Bootstrap](http://twitter.gith
 * Sitemap
 * Contact
 * Gallery
+* Theme Template
 
 ### Changelog
+
+#### Version 1.3
+
+* Added Theme Template Page
+* Flatstrap now theme under `css/flatstrap-theme.css`
+* Custom colour palette
+* Styled form
+* Contact form success modal
 
 #### Version 1.2
 

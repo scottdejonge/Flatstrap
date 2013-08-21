@@ -65,38 +65,43 @@ if(trim($_POST['checking']) !== '') {
 ?>
 
 <?php get_header(); ?>
-
-<?php get_breadcrumbs(); ?>
-
-<div id="content" class="container">
-
-	<?php if(isset($emailSent) && $emailSent == true) { ?>
-		<div class="row">
-			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
-				<div class="entry">
-					<p>Your email was successfully sent. Thanks for contacting us! We will get in touch with you shortly.</p>
-				</div>
-			</article>
-		</div>
-	<?php } else { ?>
-		
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	
-		<?php if(has_post_thumbnail()) { ?>
-			<section class="page-header">
-				<?php the_post_thumbnail('header', array('class' => 'header-image')); ?>
-				<div class="container">
-					<h1 class="page-title"><?php the_title(); ?></h1>
-				</div>
-			</section>
-		<?php } ?>
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
+	<?php if(has_post_thumbnail()) { ?>
+		<section class="page-header">
+			<?php the_post_thumbnail('header', array('class' => 'header-image')); ?>
+			<div class="container">
+				<h1 class="page-title"><?php the_title(); ?></h1>
+			</div>
+		</section>
+	<?php } ?>
+	
+	<?php get_breadcrumbs(); ?>
 		
+	<div id="content" class="container">		
 		<div class="row">
 			<article class="post col-lg-8" id="post-<?php the_ID(); ?>">
 				<?php if(!has_post_thumbnail()) { ?>
 					<h1 class="page-title"><?php the_title(); ?></h1>
 				<?php } ?>
 				<?php the_content(); ?>
+				
+				<?php if(isset($emailSent) && $emailSent == true) { ?>
+					<div id="modal" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Thanks for contacting us!</h4>
+								</div>
+								<div class="modal-body">
+									<p>Your email was successfully sent. We will get in touch with you shortly.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
 				
 				<?php if(isset($hasError) || isset($captchaError)) { ?>
 					<div class="alert alert-danger">
@@ -129,9 +134,10 @@ if(trim($_POST['checking']) !== '') {
 							<?php } ?>
 						</div>
 						<input type="hidden" name="submitted" id="submitted" value="true" />
-						<input type="submit" value="Send" class="btn btn-default" />
+						<input type="submit" value="Send" class="btn btn-primary" />
 					</fieldset>
 				</form>
+				
 			</article>
 			
 			<aside class="col-lg-4">
@@ -153,7 +159,5 @@ if(trim($_POST['checking']) !== '') {
 			</aside>
 		</div>				
 		<?php endwhile; endif; ?>
-	
-	<?php } ?>
 </div>
 <?php get_footer(); ?>

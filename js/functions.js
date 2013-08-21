@@ -14,6 +14,12 @@ if (!(window.console && console.log)) {
 (function($){})(window.jQuery);
 
 jQuery(document).ready(function (){
+
+	/* Modal */
+	
+	$('#modal').modal({
+		show: true
+	});
 	
 	/* Carousel */
 	
